@@ -41,12 +41,12 @@ def exchange_rate_chart():
         period_length = int(input('Enter period length: '))
         response = requests.get(f'http://api.nbp.pl/api/exchangerates/rates/a/{currency}/last/{period_length}/?format=json')
         data = json.loads(response.text)
-        kursy = []
+        rates = []
         dates = []
         for i in range(len(data['rates'])):
-            kursy.append(data['rates'][i]['mid'])
+            rates.append(data['rates'][i]['mid'])
             dates.append(data['rates'][i]['effectiveDate'])
-        plt.plot(dates, kursy)
+        plt.plot(dates, rates)
         plt.ylabel('Exchange rate')
         plt.xlabel('Date')
         plt.show()

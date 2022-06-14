@@ -42,7 +42,7 @@ def exchange_rate_chart():
         response = requests.get(f'http://api.nbp.pl/api/exchangerates/rates/a/{currency}/last/{period_length}/?format=json')
         data = json.loads(response.text)
         rates = [data['rates'][rate]['mid'] for rate in range(len(data['rates']))]
-        dates1 = [data['rates'][date]['effectiveDate'] for date in range(len(data['rates']))]
+        dates = [data['rates'][date]['effectiveDate'] for date in range(len(data['rates']))]
         plt.plot(dates, rates)
         plt.ylabel('Exchange rate')
         plt.xlabel('Date')

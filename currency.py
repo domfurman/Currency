@@ -15,7 +15,7 @@ def rate_check():
         url = f'https://api.nbp.pl/api/exchangerates/rates/c/{currency}/today/?format=json'
         response = requests.get(url)
         json_data = json.loads(response.text)
-        return round(json_data['rates'][0]['bid'], 2) 
+        return round(json_data['rates'][0]['bid'], 2)
     except:
         return 'Invalid currency shortcut'
 def converter():
@@ -41,11 +41,8 @@ def exchange_rate_chart():
         period_length = int(input('Enter period length: '))
         response = requests.get(f'http://api.nbp.pl/api/exchangerates/rates/a/{currency}/last/{period_length}/?format=json')
         data = json.loads(response.text)
-        rates = []
-        dates = []
-        for i in range(len(data['rates'])):
-            rates.append(data['rates'][i]['mid'])
-            dates.append(data['rates'][i]['effectiveDate'])
+        rates = [data['rates'][rate]['mid'] for rate in range(len(data['rates']))]
+        dates1 = [data['rates'][date]['effectiveDate'] for date in range(len(data['rates']))]
         plt.plot(dates, rates)
         plt.ylabel('Exchange rate')
         plt.xlabel('Date')
@@ -54,8 +51,8 @@ def exchange_rate_chart():
         return 'Number was not typed or invalid shortcut'
 
 if option_choose == 1:
-    print(rate_check())
+    print('Kurs wynosi: ', rate_check())
 elif option_choose == 2:
-    print(converter())
+    print('Przeliczona kwota wynosi: ',converter())
 elif option_choose == 3:
     print(exchange_rate_chart())
